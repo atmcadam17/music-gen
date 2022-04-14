@@ -5,27 +5,21 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Synthesizer : MonoBehaviour
 {
-    private AudioSource _audioSource;
-
-    public int currentIndex = 0;
-    public int[] notes = new int[16];
+    [HideInInspector] public AudioSource audioSource;
+    [HideInInspector] public int currentIndex = 0;
+    [HideInInspector] public int[] notes = new int[16];
     
-    void Start()
+    public void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
-        // StartCoroutine(Test());
-        
-        for (int i = 0; i < notes.Length; i++)
+        audioSource = GetComponent<AudioSource>();
+        if (this is Synthesizer)
         {
-            notes[i] = Random.Range(-20, 20);
+            Debug.Log("main synth class");
         }
-    }
-
-    void Update()
-    {
+        // StartCoroutine(Test());
     }
     
-    private IEnumerator Test()
+    private protected IEnumerator Test()
     {
         /*
         for (int i = 0; i > -40; i--)
@@ -35,10 +29,6 @@ public class Synthesizer : MonoBehaviour
         }*/
 
         // fully random melody
-        for (int i = 0; i < notes.Length; i++)
-        {
-            notes[i] = Random.Range(-20, 20);
-        }
         
         foreach (var n in notes)
         {
@@ -51,8 +41,8 @@ public class Synthesizer : MonoBehaviour
     // plays notes based on distance from root
     private void PlayNote(int semitonesFromRoot)
     {
-        _audioSource.pitch = Mathf.Pow(1.05946f, semitonesFromRoot);
-        _audioSource.Play();
+        audioSource.pitch = Mathf.Pow(1.05946f, semitonesFromRoot);
+        audioSource.Play();
     }
     
     // called by the conductor
@@ -65,11 +55,11 @@ public class Synthesizer : MonoBehaviour
         }
         else
         {
-            ResetSong();
+            Reset();
         }
     }
 
-    private void ResetSong()
+    private void Reset()
     {
         currentIndex = 0;
     }
