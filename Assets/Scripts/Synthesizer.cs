@@ -5,9 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Synthesizer : MonoBehaviour
 {
+    public bool muted;
     [HideInInspector] public AudioSource audioSource;
     [HideInInspector] public int currentIndex = 0;
-    [HideInInspector] public int[] notes = new int[16];
+    [HideInInspector] public int[] notes; // this is a BAD SOLUTION, but a blank note is 99.
     
     public void Start()
     {
@@ -37,10 +38,16 @@ public class Synthesizer : MonoBehaviour
         }
     }
 
+    public virtual void Generate(int length)
+    {
+        
+    }
+
     // pitch formula to raise a note by n semitones: 1.05946^n
     // plays notes based on distance from root
     private void PlayNote(int semitonesFromRoot)
     {
+        if (muted || semitonesFromRoot == 99) return;
         audioSource.pitch = Mathf.Pow(1.05946f, semitonesFromRoot);
         audioSource.Play();
     }
@@ -59,8 +66,13 @@ public class Synthesizer : MonoBehaviour
         }
     }
 
-    private void Reset()
+    public void Reset()
     {
         currentIndex = 0;
+    }
+
+    public virtual void DisplayInfo()
+    {
+        Debug.Log(gameObject);
     }
 }

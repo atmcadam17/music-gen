@@ -8,21 +8,9 @@ public class SongGenerator : MonoBehaviour
     {
         RandomizeSongLength();
     }
-
-    void Update()
-    {
-        
-    }
-
+    
     private void RandomizeSongLength()
     {
         // TODO:
-    }
-
-    public void GenerateMelody()
-    {
-        // TODO:
-        // generate the list of ints
-        // send to the synthesizer
     }
 }
