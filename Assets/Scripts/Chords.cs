@@ -11,10 +11,9 @@ public class Chords : Synthesizer
     
     new void Start() {
         base.Start();
-        Generate(16);
     }
     
-    public override void Generate(int length)
+    public override void Generate(int length) // takes length in beats
     {
         chordGenerator.GenerateSong(length);
         notes = chordGenerator.GetChordProgression(chordNote);

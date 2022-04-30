@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Conductor : MonoBehaviour
 {
-    public ChordGenerator chordGenerator;
     public Synthesizer[] synths;
-    public int length; // # of beats
+    [SerializeField] private int minLength = 2;
+    [SerializeField] private int maxLength = 8;
+    
+    private int _lengthInBars = 4;
     
     private float _bpm;
     private float _secPerBeat;
@@ -14,7 +16,7 @@ public class Conductor : MonoBehaviour
 
     void Start()
     {
-        RandomizeSpeed();
+        GenerateNewSong();
     }
 
     void Update()
@@ -34,9 +36,10 @@ public class Conductor : MonoBehaviour
     {
         for (int i = 0; i < synths.Length; i++)
         {
-            synths[i].Generate(length);
+            synths[i].Generate(_lengthInBars * 4);
             synths[i].Reset();
         }
+        RandomizeSpeed();
     }
 
     private void PlayNextNote()

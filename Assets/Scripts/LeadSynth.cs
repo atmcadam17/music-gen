@@ -9,10 +9,9 @@ public class LeadSynth : Synthesizer
     
     new void Start() {
         base.Start();
-        Generate(16);
     }
 
-    public override void Generate(int length)
+    public override void Generate(int length) // takes length in beats
     {
         // generates semitones w/in 2 octaves
         // ONLY choose notes on the major scale

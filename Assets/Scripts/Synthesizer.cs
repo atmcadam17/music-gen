@@ -38,7 +38,7 @@ public class Synthesizer : MonoBehaviour
         }
     }
 
-    public virtual void Generate(int length)
+    public virtual void Generate(int length) // takes length in beats
     {
         
     }
