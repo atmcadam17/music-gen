@@ -28,7 +28,7 @@ public class Chords : Synthesizer
         {
             if (n == 99)
             {
-                str += "-,";
+                str += "~,";
             }
             else
             {
