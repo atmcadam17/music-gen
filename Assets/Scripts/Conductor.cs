@@ -34,12 +34,19 @@ public class Conductor : MonoBehaviour
 
     private void GenerateNewSong()
     {
+        // randomize speed
+        _bpm = Random.Range(60, 140);
+        _secPerBeat = 60f / _bpm;
+        
+        // randomize length
+        _lengthInBars = Random.Range(minLength, maxLength);
+        
+        // synths generate their own pattern
         for (int i = 0; i < synths.Length; i++)
         {
             synths[i].Generate(_lengthInBars * 4);
             synths[i].Reset();
         }
-        RandomizeSpeed();
     }
 
     private void PlayNextNote()
@@ -48,11 +55,5 @@ public class Conductor : MonoBehaviour
         {
             synth.PlayNextNote();
         }
-    }
-
-    private void RandomizeSpeed()
-    {
-        _bpm = Random.Range(60, 140);
-        _secPerBeat = 60f / _bpm;
     }
 }

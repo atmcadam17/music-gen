@@ -15,6 +15,7 @@ public class Chords : Synthesizer
     
     public override void Generate(int length) // takes length in beats
     {
+        notes = new int[length];
         chordGenerator.GenerateSong(length);
         notes = chordGenerator.GetChordProgression(chordNote);
         DisplayInfo();
@@ -25,7 +26,14 @@ public class Chords : Synthesizer
         var str = "";
         foreach (var n in notes)
         {
-            str += n + ",";
+            if (n == 99)
+            {
+                str += "-,";
+            }
+            else
+            {
+                str += n + ",";
+            }
         }
 
         noteTMP.text = "Chord" + chordNote + ":" + str;

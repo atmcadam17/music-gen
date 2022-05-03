@@ -7,6 +7,8 @@ public class LeadSynth : Synthesizer
 {
     [SerializeField] private TextMeshProUGUI melodyTmp;
     [SerializeField] private ChordGenerator _chordGen;
+
+    [SerializeField] private float clampDistance = 5; // how far regular notes can jump
     
     [SerializeField] private float restChance = .1f; // chance for any note to be a rest
     [SerializeField] private float anchorRestChance = .03f; // rest chance for notes & start of bar
@@ -19,8 +21,9 @@ public class LeadSynth : Synthesizer
     {
         // generates semitones w/in 2 octaves
         // ONLY choose notes on the major scale
-        int[] majScale = {-12,-10,-8,-7,-5,-3,-1,0,2,4,5,7,9,11,12};
+        int[] majScale = {-12,-10,-8,-7,-5,-3,-1,0,2,4,5,7,9,11,12,14,16,17,19};
 
+        notes = new int[length];
         int currentBar = 0;
         for (int i = 0; i < length; i++)
         {
@@ -42,6 +45,7 @@ public class LeadSynth : Synthesizer
 
                 var chosenRef = referenceNotes[Random.Range(0, referenceNotes.Count)];
                 var r = Random.value;
+                // TODO: because of how intervals work this sometimes generates a godawful note
                 if (r<.33f) // third from ref note
                 {
                     notes[i] = chosenRef + 3;
@@ -53,6 +57,28 @@ public class LeadSynth : Synthesizer
                 {
                     notes[i] = chosenRef + 5;
                 }
+                
+                var onMajorScale = false;
+                foreach (var n in majScale)
+                {
+                    if (n == notes[i])
+                    {
+                        onMajorScale = true;
+                    }
+                }
+
+                if (!onMajorScale)
+                {
+                    if (Random.value < .5f)
+                    {
+                        notes[i] += 1;
+                    }
+                    else
+                    {
+                        notes[i] -= 1;
+                    }
+                }
+                
                 currentBar++;
                 continue;
             }
@@ -65,8 +91,19 @@ public class LeadSynth : Synthesizer
             }
             else
             {
-                // TODO: most likely either a step, 3rd, or 5th from prev note?
+                // clamp distance
                 notes[i] = majScale[Random.Range(0, majScale.Length)]; // default: random note
+                
+                // TODO:
+                // find index of prev note
+                // choose random index within ClampDistance
+                // that's your note!
+                
+                /* no.
+                while (notes[i-1] != 99 && !(notes[i] <= notes[i-1] + clampDistance && notes[i] >= notes[i-1] - clampDistance))
+                { // while NOT within clampDistance of previous note, keep generating until it is
+                    notes[i] = majScale[Random.Range(0, majScale.Length)];
+                }*/
             }
         }
 
@@ -78,7 +115,14 @@ public class LeadSynth : Synthesizer
         var str = "";
         foreach (var n in notes)
         {
-            str += n + ",";
+            if (n == 99)
+            {
+                str += "-,";
+            }
+            else
+            {
+                str += n + ",";
+            }
         }
 
         melodyTmp.text = "Melody: " + str;
