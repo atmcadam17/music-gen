@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Conductor : MonoBehaviour
 {
-    public Synthesizer[] synths;
+    public Synthesizer[] synths; // chord synths MUST come first for generation to work
     [SerializeField] private int minLength = 2;
     [SerializeField] private int maxLength = 8;
     

@@ -57,21 +57,20 @@ public class ChordGenerator : MonoBehaviour
         Mid
     }
 
-    [SerializeField] private TextMeshProUGUI chordsTmp;
-    private int[][] _currentChords;
+    public int[][] CurrentChords;
 
     public void GenerateSong(int length) // takes length in beats
     {
-        _currentChords = new int[length][];
-        for (int i = 0; i < _currentChords.Length; i++)
+        CurrentChords = new int[length][];
+        for (int i = 0; i < CurrentChords.Length; i++)
         {
             if (i % 4 == 0)
             {
-                _currentChords[i] = RandomChord(length, i/4);
+                CurrentChords[i] = RandomChord(length, i/4);
             }
             else
             {
-                _currentChords[i] = new []{99,99,99};
+                CurrentChords[i] = new []{99,99,99};
             }
         }
     }
@@ -174,11 +173,11 @@ public class ChordGenerator : MonoBehaviour
         
         var progression = new int[0];
         var newProgression = new int[0];
-        for (int i = 0; i < _currentChords.Length; i++)
+        for (int i = 0; i < CurrentChords.Length; i++)
         {
             newProgression = new int[progression.Length + 1];
             Array.Copy(progression, newProgression, progression.Length);
-            newProgression[i] = _currentChords[i][index];
+            newProgression[i] = CurrentChords[i][index];
             progression = newProgression;
         }
 
