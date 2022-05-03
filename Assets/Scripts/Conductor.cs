@@ -7,6 +7,8 @@ public class Conductor : MonoBehaviour
     public Synthesizer[] synths; // chord synths MUST come first for generation to work
     [SerializeField] private int minLength = 2;
     [SerializeField] private int maxLength = 8;
+    [SerializeField] private int minBpm = 60;
+    [SerializeField] private int maxBpm = 180;
     
     private int _lengthInBars = 4;
     
@@ -35,7 +37,7 @@ public class Conductor : MonoBehaviour
     private void GenerateNewSong()
     {
         // randomize speed
-        _bpm = Random.Range(60, 140);
+        _bpm = Random.Range(minBpm, maxBpm);
         _secPerBeat = 60f / _bpm;
         
         // randomize length
