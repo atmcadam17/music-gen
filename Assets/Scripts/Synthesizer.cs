@@ -6,6 +6,7 @@ using UnityEngine;
 public class Synthesizer : MonoBehaviour
 {
     public bool muted;
+    public List<AudioClip> possibleSounds;
     [HideInInspector] public AudioSource audioSource;
     [HideInInspector] public int currentIndex = 0;
     [HideInInspector] public int[] notes; // this is a BAD SOLUTION, but a blank note is 99.

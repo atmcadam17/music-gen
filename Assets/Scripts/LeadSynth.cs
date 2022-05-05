@@ -8,13 +8,15 @@ public class LeadSynth : Synthesizer
     [SerializeField] private TextMeshProUGUI melodyTmp;
     [SerializeField] private ChordGenerator _chordGen;
 
-    [SerializeField] private float clampDistance = 5; // how far regular notes can jump
+    // [SerializeField] private float clampDistance = 5; // how far regular notes can jump
+    // nevermind actually?
     
     [SerializeField] private float restChance = .1f; // chance for any note to be a rest
     [SerializeField] private float anchorRestChance = .03f; // rest chance for notes & start of bar
     
     new void Start() {
         base.Start();
+        randomizeSound();
     }
 
     public override void Generate(int length) // takes length in beats
@@ -107,6 +109,7 @@ public class LeadSynth : Synthesizer
             }
         }
 
+        randomizeSound();
         DisplayInfo();
     }
 
@@ -126,5 +129,10 @@ public class LeadSynth : Synthesizer
         }
 
         melodyTmp.text = "Melody: " + str;
+    }
+
+    private void randomizeSound()
+    {
+        audioSource.clip = possibleSounds[Random.Range(0,possibleSounds.Count)];
     }
 }

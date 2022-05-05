@@ -28,28 +28,19 @@ public class ChordGenerator : MonoBehaviour
 {
     private List<Chord> cMajorChords = new List<Chord>()
     {
-        new Chord(new []{0,4,7}, Chord.Types.Tonic), // Cmaj
-        new Chord(new []{-8,0,5}, Chord.Types.Tonic), // Cmaj 1st inversion
-        new Chord(new []{2,5,9}, Chord.Types.Subdom), // Dm
-        new Chord(new []{4,7,11}, Chord.Types.Tonic), // Em
-        new Chord(new []{5,9,12}, Chord.Types.Subdom), // Fmaj
-        new Chord(new []{0,5,9}, Chord.Types.Subdom), // Fmaj 1st inversion
-        new Chord(new []{7,11,14}, Chord.Types.Dom), // Gmaj
-        new Chord(new []{2,7,11}, Chord.Types.Dom), // Gmaj 1st inv
-        new Chord(new []{4,9,12}, Chord.Types.Tonic), // Am 1st inv
-        new Chord(new []{0,4,9}, Chord.Types.Tonic), // Am 2nd inv
-        new Chord(new []{2,5,11}, Chord.Types.Dom), // Bdim 2nd inv
+        new Chord(new[] {0, 4, 7}, Chord.Types.Tonic), // Cmaj
+        new Chord(new[] {-8, 0, 5}, Chord.Types.Tonic), // Cmaj 1st inversion
+        new Chord(new[] {2, 5, 9}, Chord.Types.Subdom), // Dm
+        new Chord(new[] {4, 7, 11}, Chord.Types.Tonic), // Em
+        new Chord(new[] {5, 9, 12}, Chord.Types.Subdom), // Fmaj
+        new Chord(new[] {0, 5, 9}, Chord.Types.Subdom), // Fmaj 1st inversion
+        new Chord(new[] {7, 11, 14}, Chord.Types.Dom), // Gmaj
+        new Chord(new[] {2, 7, 11}, Chord.Types.Dom), // Gmaj 1st inv
+        new Chord(new[] {4, 9, 12}, Chord.Types.Tonic), // Am 1st inv
+        new Chord(new[] {0, 4, 9}, Chord.Types.Tonic), // Am 2nd inv
+        new Chord(new[] {2, 5, 11}, Chord.Types.Dom), // Bdim 2nd inv
     };
-    
-    /*
-    private List<int[]> cMajorChords = new List<int[]>()
-    {
-        new []{0,4,7}, // cmajor
-        new []{3,6,10}, // dmaj?
-        new []{4,7,11}, // em
-        new []{5,9,12}, // gmaj
-    };*/
-    
+
     public enum ChordNote
     {
         Hi,
@@ -58,6 +49,8 @@ public class ChordGenerator : MonoBehaviour
     }
 
     public int[][] CurrentChords;
+    private AudioClip CurrentAudio;
+    public Chords[] ChordSynths;
 
     public void GenerateSong(int length) // takes length in beats
     {
@@ -182,5 +175,13 @@ public class ChordGenerator : MonoBehaviour
         }
 
         return progression;
+    }
+
+    public void setRandomSound(AudioClip clip)
+    {
+        foreach (var synth in ChordSynths)
+        {
+            synth.audioSource.clip = clip;
+        }
     }
 }

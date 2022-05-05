@@ -18,6 +18,7 @@ public class Chords : Synthesizer
         notes = new int[length];
         chordGenerator.GenerateSong(length);
         notes = chordGenerator.GetChordProgression(chordNote);
+        chordGenerator.setRandomSound(possibleSounds[Random.Range(0,possibleSounds.Count)]);
         DisplayInfo();
     }
 
